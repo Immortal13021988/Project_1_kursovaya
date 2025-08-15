@@ -2,13 +2,13 @@
 
 ## Описание проекта:
 
-1. 
+1.  
 
 ## Установка:
 
 1. Клонируйте репозиторий:
 
-   git clone https://github.com/Immortal13021988/Project_OOP
+   git clone https://github.com/Immortal13021988/pythonProject_1
 
 2. Установите зависимости:
 
@@ -25,3 +25,4 @@ poetry install
 ## Тестирование:
 
 В проекте реализованы тесты для всех функций (pytest)
+
