@@ -10,7 +10,7 @@
 
 1. Клонируйте репозиторий:
 
-   git clone https://github.com/Immortal13021988/pythonProject_1
+   git clone https://github.com/Immortal13021988/Project_1_kursovaya
 
 2. Установите зависимости:
 
