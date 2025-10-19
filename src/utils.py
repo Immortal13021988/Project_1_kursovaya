@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from pathlib import Path
 from typing import Any, Optional
@@ -17,6 +18,14 @@ load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
 API_KEY_2 = os.getenv("API_KEY_2")
+
+
+logger = logging.getLogger("utils")
+logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler("../logs/utils.log", "a")
+file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: - %(message)s")
+file_handler.setFormatter(file_formatter)
+logger.addHandler(file_handler)
 
 
 def greeting() -> str:  # type: ignore
@@ -122,37 +131,51 @@ def stock_prices(user_set: dict) -> list:
     """
     Функция получения стоимости акций согласно файла пользовательских настроек
     """
-    result_list = []
-    for us in user_set["user_stocks"]:
-        url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={us}&apikey={API_KEY}"
-        headers = {"apikey": API_KEY}
-        response = requests.get(url, headers=headers)
-        result = response.json()
-        data = result["Meta Data"]["3. Last Refreshed"]
-        result_list.append({"stock": us, "price": result["Time Series (Daily)"][data]["1. open"]})
-        if response.status_code == 200:
-            continue
-        else:
-            return []
-    return result_list
+    try:
+        logger.info('Выполняется обращение к API "https://www.alphavantage.co"')
+        result_list = []
+        for us in user_set["user_stocks"]:
+            url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={us}&apikey={API_KEY}"
+            headers = {"apikey": API_KEY}
+            response = requests.get(url, headers=headers)
+            result = response.json()
+            data = result["Meta Data"]["3. Last Refreshed"]
+            result_list.append({"stock": us, "price": result["Time Series (Daily)"][data]["1. open"]})
+            if response.status_code == 200:
+                logger.info(f'Успешный запрос к API "https://www.alphavantage.co" по акции "{us}"')
+                continue
+            else:
+                logger.error(f"Пустой ответ")
+                return []
+        return result_list
+    except Exception as ex:
+        logger.error(f"Произошла ошибка: {ex}")
+        return []
 
 
 def currency_rates(user_set: dict) -> list:
     """
     Функция получения курсов валют согласно файла пользовательских настроек
     """
-    result_list = []
-    for us in user_set["user_currencies"]:
-        url = f"https://api.apilayer.com/exchangerates_data/convert?to={'RUB'}&from={us}&amount={1}"
-        headers = {"apikey": API_KEY_2}
-        response = requests.get(url, headers=headers)
-        result = response.json()
-        result_list.append({"currency": us, "rate": float(round(result["result"], 2))})
-        if response.status_code == 200:
-            continue
-        else:
-            return []
-    return result_list
+    try:
+        logger.info('Выполняется обращение к API "https://api.apilayer.com"')
+        result_list = []
+        for us in user_set["user_currencies"]:
+            url = f"https://api.apilayer.com/exchangerates_data/convert?to={'RUB'}&from={us}&amount={1}"
+            headers = {"apikey": API_KEY_2}
+            response = requests.get(url, headers=headers)
+            result = response.json()
+            result_list.append({"currency": us, "rate": float(round(result["result"], 2))})
+            if response.status_code == 200:
+                logger.info(f'Успешный запрос к API "https://api.apilayer.com" по курсу валюты "{us}"')
+                continue
+            else:
+                logger.error(f"Пустой ответ")
+                return []
+        return result_list
+    except Exception as ex:
+        logger.error(f"Произошла ошибка: {ex}")
+        return []
 
 
 # def get_sum_by_category(date: str = None) -> dict:
