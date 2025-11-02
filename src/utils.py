@@ -11,7 +11,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from dotenv import load_dotenv
 
-from config import PATH_DATA_USER_SET, PATH_XLSX
+from config import PATH_DATA_USER_SET, PATH_XLSX, PATH_LOGS
 
 load_dotenv()
 
@@ -22,7 +22,7 @@ API_KEY_2 = os.getenv("API_KEY_2")
 
 logger = logging.getLogger("utils")
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler("../logs/utils.log", "a")
+file_handler = logging.FileHandler(f"{PATH_LOGS}/utils.log", "a")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: - %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)

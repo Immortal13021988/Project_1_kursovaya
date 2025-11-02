@@ -25,3 +25,13 @@
 2025-09-26 01:13:02,715 - utils - INFO: - Успешный запрос к API "https://www.alphavantage.co" по акции "GOOGL"
 2025-09-26 01:13:03,688 - utils - INFO: - Успешный запрос к API "https://www.alphavantage.co" по акции "MSFT"
 2025-09-26 01:13:04,763 - utils - INFO: - Успешный запрос к API "https://www.alphavantage.co" по акции "TSLA"
+2025-11-02 04:00:01,219 - utils - INFO: - Выполняется обращение к API "https://api.apilayer.com"
+2025-11-02 04:00:01,220 - utils - INFO: - Успешный запрос к API "https://api.apilayer.com" по курсу валюты "USD"
+2025-11-02 04:00:01,220 - utils - INFO: - Успешный запрос к API "https://api.apilayer.com" по курсу валюты "EUR"
+2025-11-02 04:00:01,223 - utils - INFO: - Выполняется обращение к API "https://api.apilayer.com"
+2025-11-02 04:00:01,224 - utils - ERROR: - Пустой ответ
+2025-11-02 04:00:01,227 - utils - INFO: - Выполняется обращение к API "https://www.alphavantage.co"
+2025-11-02 04:00:01,227 - utils - INFO: - Успешный запрос к API "https://www.alphavantage.co" по акции "AAPL"
+2025-11-02 04:00:01,228 - utils - INFO: - Успешный запрос к API "https://www.alphavantage.co" по акции "AMZN"
+2025-11-02 04:00:01,231 - utils - INFO: - Выполняется обращение к API "https://www.alphavantage.co"
+2025-11-02 04:00:01,232 - utils - ERROR: - Пустой ответ
