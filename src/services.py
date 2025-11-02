@@ -3,12 +3,12 @@ import logging
 
 import pandas as pd
 
-from config import PATH_XLSX
+from config import PATH_XLSX, PATH_LOGS
 from src.utils import read_xlsx
 
 logger = logging.getLogger('service')
 logger.setLevel(logging.DEBUG)
-file_handler = logging.FileHandler("../logs/service.log", "a")
+file_handler = logging.FileHandler(f"{PATH_LOGS}/service.log", "a")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: - %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
@@ -29,8 +29,8 @@ def pd_search(data: pd.DataFrame, search: str) -> str:
             (data["Описание"].str.contains(search, case=False)) | (data["Категория"].str.contains(search, case=False))
         ]
         ret_df = json.dumps(data_df.to_dict("records"), ensure_ascii=False, indent=4)
-        if not ret_df:
-            logger.error(f'Строка "{search}" не найдена')
+        if data_df.empty:
+            logger.info(f'Строка "{search}" не найдена')
             return ret_df
         else:
             logger.info(f'Строка "{search}" найдена')
@@ -41,4 +41,4 @@ def pd_search(data: pd.DataFrame, search: str) -> str:
 
 if __name__ == "__main__":
     data_df_f = read_xlsx(PATH_XLSX)  # type: ignore
-    print(pd_search(data_df_f, "пыж"))  # для проверки, что ищет в обоих столбцах
+    print(pd_search(data_df_f, "РЖД"))  # для проверки, что ищет в обоих столбцах
